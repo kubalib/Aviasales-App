@@ -1,0 +1,51 @@
+.tabs {
+  grid-row: 1 / 2;
+  display: flex;
+}
+
+.tab {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 16.8rem;
+  width: 100%;
+  padding: 1.5rem;
+  border: 1px solid rgb(223, 229, 236);
+  background-color: #fff;
+
+  &:first-child {
+    border-radius: 5px 0 0 5px;
+    border-right: 0;
+  }
+
+  &:last-child {
+    border-radius: 0 5px 5px 0;
+    border-left: 0;
+  }
+
+  &:active {
+    background: rgb(33, 150, 243);
+    color: #fff;
+  }
+
+  .active {
+    background: rgb(33, 150, 243);
+    color: #fff;
+  }
+
+  &:hover {
+    cursor: pointer;
+    background: #2196f3;
+    color: white;
+  }
+
+  span {
+    font-size: 1.2rem;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    text-align: center;
+  }
+}
+
+
