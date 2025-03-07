@@ -24,6 +24,7 @@
 }
 
 .wrapper {
+  position: relative;
   padding: 1rem 2rem;
   cursor: pointer;
 
@@ -33,7 +34,12 @@
 }
 
 .checkbox {
-  display: none;
+  position: absolute;
+  // opacity: 0;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
 
   &:checked + label:before {
     // content: "✔";
@@ -42,6 +48,10 @@
     background-image: url(Shape.svg);
     background-repeat: no-repeat;
     background-position: center;
+  }
+
+  &:focus + .label:before {
+    outline: 1px solid #9abbce;
   }
 }
 
@@ -68,6 +78,7 @@
     margin-right: 1rem;
   }
 }
+
 
 @media (max-width: 459px) {
   .filter {

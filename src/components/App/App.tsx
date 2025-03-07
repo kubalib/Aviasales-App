@@ -8,16 +8,16 @@ import logo from "./Logo.png";
 const App = () => {
   return (
     <div className={styles.app}>
-      <div className={styles.header}>
+      <header className={styles.header}>
         <img className={styles.logo} alt="logo" src={logo} />
-      </div>
-      <div className={styles.filterBlock}>
+      </header>
+      <aside className={styles.filterBlock}>
         <Filter />
-      </div>
-      <div className={styles.main}>
+      </aside>
+      <main className={styles.main}>
         <Tabs />
         <TicketList />
-      </div>
+      </main>
     </div>
   );
 };

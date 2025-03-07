@@ -18,6 +18,10 @@ body {
   font-size: 1.6rem;
 }
 
+button {
+  font-family: "Open Sans", sans-serif;
+}
+
 @media (max-width: 720px) {
   html {
     font-size: 50%;
