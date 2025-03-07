@@ -3,12 +3,14 @@ import styles from "./TicketList.module.scss";
 
 const TicketList = () => {
   return (
-    <div className={styles.ticketList}>
-      <Ticket />
+    <section>
+      <ul className={styles.ticketList}>
+        <Ticket />
+      </ul>
       <button className={styles.showMoreButton} type="button">
         Показать еще 5 билетов!
       </button>
-    </div>
+    </section>
   );
 };
 

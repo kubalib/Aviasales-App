@@ -2,16 +2,16 @@ import styles from "./Tabs.module.scss";
 
 const Tabs = () => {
   return (
-    <div className={styles.tabs}>
-      <div className={styles.tab}>
-        <span>Самый дешевый</span>
-      </div>
-      <div className={styles.tab}>
-        <span>Самый быстрый</span>
-      </div>
-      <div className={styles.tab}>
-        <span>Оптимальный</span>
-      </div>
+    <div className={styles.tabs} role="tablist">
+      <button className={styles.tab} role="tab">
+        Самый дешевый
+      </button>
+      <button className={styles.tab} role="tab">
+        Самый быстрый
+      </button>
+      <button className={styles.tab} role="tab">
+        Оптимальный
+      </button>
     </div>
   );
 };
