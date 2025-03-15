@@ -28,15 +28,12 @@
     border-left: 0;
   }
 
-  &:active {
-    background: rgb(33, 150, 243);
-    color: #fff;
-  }
+  // &:active {
+  //   background: rgb(33, 150, 243);
+  //   color: #fff;
+  // }
 
-  .active {
-    background: rgb(33, 150, 243);
-    color: #fff;
-  }
+ 
 
   &:hover {
     cursor: pointer;
@@ -44,3 +41,11 @@
     color: white;
   }
 }
+.active {
+  background: rgb(33, 150, 243);
+  color: #fff;
+}
+
+
+
+
