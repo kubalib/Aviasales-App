@@ -12,12 +12,22 @@
 
 .ticketHeader {
   display: flex;
+  justify-content: space-between;
 
   .ticketPrice {
-    flex: 1;
+    // flex: 2;
     font-size: 2.4rem;
     font-weight: 600;
     color: rgb(33, 150, 243);
+  }
+
+  .ticketLogo {
+    max-width: 110px;
+    width: 100%;
+    img {
+      width: 100%;
+      margin-left: auto;
+    }
   }
 }
 
@@ -26,13 +36,18 @@
   display: flex;
   gap: 1rem;
   flex-direction: column;
-  padding-right: 5rem;
+  // padding-right: 5rem;
 }
 
 .ticketRow {
   list-style: none;
   display: flex;
   justify-content: space-between;
+}
+
+.ticketData {
+  width: 100%;
+  max-width: 14rem;
 }
 
 .ticketDataTitle {
@@ -51,9 +66,10 @@
 }
 
 @media (max-width: 720px) {
-  .ticketLogo img {
-    width: 90%;
+  .ticketHeader {
+    .ticketLogo {
+      max-width: 10rem;
+    }
   }
+ 
 }
-
-

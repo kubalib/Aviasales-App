@@ -1,38 +1,38 @@
 import { useDispatch, useSelector } from "react-redux";
-import { setSorting } from "../../redux/store";
+import { setSorting } from "../../redux/sorting";
+import { SortingState } from "../../redux/sorting";
 import styles from "./Tabs.module.scss";
 
 const Tabs = () => {
-  const dispatch = useDispatch();
-  const currentSorting = useSelector((state) => state.sorting);
+  const sortingOptions = [
+    { key: "cheapest", label: "Самый дешевый" },
+    { key: "fastest", label: "Самый быстрый" },
+    { key: "optimal", label: "Оптимальный" },
+  ];
 
-  const handleClick = (sort: string) => {
+  const dispatch = useDispatch();
+  const currentSorting = useSelector(
+    (state: { sorting: SortingState }) => state.sorting.sort,
+  );
+
+  const handleClick = (sort: SortingState["sort"]) => () => {
     dispatch(setSorting(sort));
   };
 
   return (
     <div className={styles.tabs} role="tablist">
-      <button
-        className={`${styles.tab} ${currentSorting === "cheapest" ? styles.active : ""}`}
-        role="tab"
-        onClick={() => handleClick("cheapest")}
-      >
-        Самый дешевый
-      </button>
-      <button
-        className={`${styles.tab} ${currentSorting === "fastest" ? styles.active : ""}`}
-        role="tab"
-        onClick={() => handleClick("fastest")}
-      >
-        Самый быстрый
-      </button>
-      <button
-        className={`${styles.tab} ${currentSorting === "optimal" ? styles.active : ""}`}
-        role="tab"
-        onClick={() => handleClick("optimal")}
-      >
-        Оптимальный
-      </button>
+      {sortingOptions.map(({ key, label }) => {
+        return (
+          <button
+            key={key}
+            className={`${styles.tab} ${currentSorting === key ? styles.active : ""}`}
+            role="tab"
+            onClick={handleClick(key as SortingState["sort"])}
+          >
+            {label}
+          </button>
+        );
+      })}
     </div>
   );
 };
