@@ -34,7 +34,6 @@ const fetchTickets = createAsyncThunk<void, void>(
             );
           }
           const ticketsData = await responseTickets.json();
-          // console.log(ticketsData);
 
           dispatch(addTickets(ticketsData.tickets));
 

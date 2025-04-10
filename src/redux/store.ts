@@ -20,3 +20,4 @@ export default store;
 export const useSelector: TypedUseSelectorHook<
   ReturnType<typeof store.getState>
 > = useReduxSelector;
+export type AppDispatch = typeof store.dispatch;

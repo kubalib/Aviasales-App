@@ -8,12 +8,13 @@ import fetchTickets from "../../redux/fetchTickets";
 
 import { FiltersKey } from "../../redux/filters";
 import { useSelector } from "../../redux/store";
+import { AppDispatch } from "../../redux/store";
 
 import styles from "./App.module.scss";
 import logo from "./Logo.png";
 
 const App = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const { tickets, loading, error } = useSelector((state) => state.tickets);
   const { filters } = useSelector((state) => state.filters);
 
