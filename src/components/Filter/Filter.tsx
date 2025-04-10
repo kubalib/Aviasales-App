@@ -1,43 +1,36 @@
+import { useDispatch } from "react-redux";
+import { toggleFilter, FiltersKey } from "../../redux/filters";
+import { useSelector } from "../../redux/store";
+
 import styles from "./Filter.module.scss";
 
 const Filter = () => {
+  const dispatch = useDispatch();
+  const { filters } = useSelector((state) => state.filters);
+
+  const handleChange = (filterName: FiltersKey) => () => {
+    dispatch(toggleFilter(filterName));
+  };
+
   return (
     <div className={styles.filter}>
       <p className={styles.title}>Количество пересадок</p>
-      <div className={styles.wrapper}>
-        <input type="checkbox" id="all" className={styles.checkbox} />
-        <label className={styles.label} htmlFor="all">
-          Все
-        </label>
-      </div>
-      <div className={styles.wrapper}>
-        <input type="checkbox" id="no_transfers" className={styles.checkbox} />
-        <label className={styles.label} htmlFor="no_transfers">
-          Без пересадок
-        </label>
-      </div>
-      <div className={styles.wrapper}>
-        <input type="checkbox" id="transfers_one" className={styles.checkbox} />
-        <label className={styles.label} htmlFor="transfers_one">
-          1 пересадка
-        </label>
-      </div>
-      <div className={styles.wrapper}>
-        <input type="checkbox" id="transfers_two" className={styles.checkbox} />
-        <label className={styles.label} htmlFor="transfers_two">
-          2 пересадки
-        </label>
-      </div>
-      <div className={styles.wrapper}>
-        <input
-          type="checkbox"
-          id="transfers_three"
-          className={styles.checkbox}
-        />
-        <label className={styles.label} htmlFor="transfers_three">
-          3 пересадки
-        </label>
-      </div>
+      {filters.map(({ value, checked, label }) => {
+        return (
+          <div key={value} className={styles.wrapper}>
+            <input
+              type="checkbox"
+              id={value.toString()}
+              className={styles.checkbox}
+              checked={checked}
+              onChange={handleChange(value)}
+            />
+            <label className={styles.label} htmlFor={value.toString()}>
+              {label}
+            </label>
+          </div>
+        );
+      })}
     </div>
   );
 };
