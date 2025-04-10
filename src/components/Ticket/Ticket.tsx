@@ -1,19 +1,7 @@
-import styles from "./Ticket.module.scss";
 import { parseISO, addMinutes, format } from "date-fns";
-
-interface Segment {
-  origin: string;
-  destination: string;
-  date: string;
-  stops: string[];
-  duration: number;
-}
-
-export interface TicketType {
-  price: number;
-  carrier: string;
-  segments: [Segment, Segment];
-}
+import { TicketType } from "../../redux/tickets";
+import { FC } from "react";
+import styles from "./Ticket.module.scss";
 
 interface TicketProps {
   ticket: TicketType;
@@ -38,7 +26,7 @@ const stopsLabel = (count: number) => {
   }
 };
 
-const Ticket = ({ ticket }: TicketProps) => {
+const Ticket: FC<TicketProps> = ({ ticket }) => {
   return (
     <li className={styles.ticket}>
       <article>

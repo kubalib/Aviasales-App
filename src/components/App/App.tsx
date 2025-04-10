@@ -1,36 +1,35 @@
 import Filter from "../Filter/Filter";
 import TicketList from "../TicketList/TicketList";
 import Tabs from "../Tabs/Tabs";
-import BarLoader from "react-spinners/BarLoader";
 import { Alert } from "antd";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import fetchTickets from "../../redux/fetchTickets";
-import { TicketsState } from "../../redux/tickets";
-import { FiltersState } from "../../redux/filters";
-import { SortingState } from "../../redux/sorting";
+
+import { FiltersKey } from "../../redux/filters";
+import { useSelector } from "../../redux/store";
 
 import styles from "./App.module.scss";
 import logo from "./Logo.png";
 
 const App = () => {
   const dispatch = useDispatch();
-  const { tickets, loading, error } = useSelector(
-    (state: { tickets: TicketsState }) => state.tickets,
-  );
-  const allowedStops = useSelector(
-    (state: { filters: FiltersState }) => state.filters.activeStops,
-  );
-  const currentSorting = useSelector(
-    (state: { sorting: SortingState }) => state.sorting.sort,
-  );
+  const { tickets, loading, error } = useSelector((state) => state.tickets);
+  const { filters } = useSelector((state) => state.filters);
 
-  const shouldFilter = allowedStops.length > 0;
+  const currentSorting = useSelector((state) => state.sorting.sort);
+
+  const activeStops = filters.reduce<FiltersKey[]>((acc, el) => {
+    if (el.checked) acc.push(el.value);
+    return acc;
+  }, [] as FiltersKey[]);
+
+  const shouldFilter = activeStops.some((el) => el !== FiltersKey.all);
 
   const filteredTickets = shouldFilter
     ? tickets.filter((ticket) =>
         ticket.segments.some((segment) =>
-          allowedStops.includes(segment.stops.length),
+          activeStops.includes(segment.stops.length),
         ),
       )
     : tickets;
@@ -42,8 +41,8 @@ const App = () => {
   } else if (currentSorting === "fastest") {
     sortedTickets.sort(
       (a, b) =>
-        (a.segments[0].duration +
-        a.segments[1].duration) -
+        a.segments[0].duration +
+        a.segments[1].duration -
         (b.segments[0].duration + b.segments[1].duration),
     );
   }
@@ -63,8 +62,10 @@ const App = () => {
       <main className={styles.main}>
         <Tabs />
         {loading && (
-          <div className={styles.loader}>
-            {<BarLoader color="rgb(33, 150, 243)" height={5} />}
+          <div className={styles.loadingWrapper}>
+            <div className={styles.loading}>
+              <span></span>
+            </div>
             Ищем билеты...
           </div>
         )}

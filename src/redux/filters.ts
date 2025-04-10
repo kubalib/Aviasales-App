@@ -1,72 +1,51 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 interface FilterOptions {
+  value: FiltersKey;
   checked: boolean;
   label: string;
 }
 
 export interface FiltersState {
-  all: FilterOptions;
-  noTransfers: FilterOptions;
-  transfersOne: FilterOptions;
-  transfersTwo: FilterOptions;
-  transfersThree: FilterOptions;
-  activeStops: number[];
+  filters: FilterOptions[];
+}
+
+export enum FiltersKey {
+  all = -1,
+  noTransfers = 0,
+  transfersOne = 1,
+  transfersTwo = 2,
+  transfersThree = 3,
 }
 
 const initialState: FiltersState = {
-  all: {
-    checked: false,
-    label: "Все",
-  },
-  noTransfers: {
-    checked: false,
-    label: "Без пересадок",
-  },
-  transfersOne: {
-    checked: false,
-    label: "1 пересадка",
-  },
-  transfersTwo: {
-    checked: false,
-    label: "2 пересадки",
-  },
-  transfersThree: {
-    checked: false,
-    label: "3 пересадки",
-  },
-  activeStops: [],
+  filters: [
+    { value: FiltersKey.all, checked: false, label: "Все" },
+    { value: FiltersKey.noTransfers, checked: false, label: "Без пересадок" },
+    { value: FiltersKey.transfersOne, checked: false, label: "1 пересадка" },
+    { value: FiltersKey.transfersTwo, checked: false, label: "2 пересадки" },
+    { value: FiltersKey.transfersThree, checked: false, label: "3 пересадки" },
+  ],
 };
 
 export const filtersReducer = createSlice({
   name: "filters",
   initialState,
   reducers: {
-    toggleFilter: (state, action: PayloadAction<keyof FiltersState>) => {
+    toggleFilter: (state, action: PayloadAction<FiltersKey>) => {
       const filter = action.payload;
-      state[filter].checked = !state[filter].checked;
 
-      if (filter === "all") {
-        Object.keys(state)
-          .filter((key) => key !== "activeStops")
-          .forEach((key) => {
-            state[key as keyof FiltersState].checked = state.all.checked;
-          });
+      state.filters.forEach((el) =>
+        el.value == filter ? (el.checked = !el.checked) : false,
+      );
+
+      if (filter === FiltersKey.all) {
+        state.filters.forEach((el) => (el.checked = state.filters[0].checked));
       } else {
-        state.all.checked =
-          state.noTransfers.checked &&
-          state.transfersOne.checked &&
-          state.transfersTwo.checked &&
-          state.transfersThree.checked;
+        state.filters[0].checked = state.filters
+          .filter((el) => el.value !== FiltersKey.all)
+          .every((el) => el.checked);
       }
-
-      const activeStops: number[] = [];
-
-      if (state.noTransfers.checked) activeStops.push(0);
-      if (state.transfersOne.checked) activeStops.push(1);
-      if (state.transfersTwo.checked) activeStops.push(2);
-      if (state.transfersThree.checked) activeStops.push(3);
-      state.activeStops = activeStops;
     },
   },
 });

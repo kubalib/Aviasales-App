@@ -1,29 +1,22 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import fetchTickets from "./fetchTickets";
 
-interface Ticket {
+type Segment = {
+  origin: string;
+  destination: string;
+  date: string;
+  stops: string[];
+  duration: number;
+};
+
+export interface TicketType {
   price: number;
   carrier: string;
-  segments: [
-    {
-      origin: string;
-      destination: string;
-      date: string;
-      stops: string[];
-      duration: number;
-    },
-    {
-      origin: string;
-      destination: string;
-      date: string;
-      stops: string[];
-      duration: number;
-    },
-  ];
+  segments: [Segment, Segment];
 }
 
-export interface TicketsState {
-  tickets: Ticket[];
+interface TicketsState {
+  tickets: TicketType[];
   loading: boolean;
   error: string | null;
 }
@@ -38,7 +31,7 @@ export const ticketsReducer = createSlice({
   name: "tickets",
   initialState,
   reducers: {
-    addTickets: (state, action: PayloadAction<Ticket[]>) => {
+    addTickets: (state, action: PayloadAction<TicketType[]>) => {
       state.tickets = [...state.tickets, ...action.payload];
     },
     setLoading: (state, action: PayloadAction<boolean>) => {
